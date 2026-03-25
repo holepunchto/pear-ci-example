@@ -30,13 +30,13 @@ jobs:
         run: npm install -g corestore-snapshot pear-stage-next
 
       - name: Open Snapshot
-        run: corestore-snapshot --open --snapshot=./ci/snapshot.json --storage=/tmp/store
+        run: corestore-snapshot --open --snapshot=./ci/snapshot.json --storage=/tmp/store --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567
 
       - name: Stage next
         run: pear-stage-next --storage=/tmp/store --target=./build/ --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567 --name=${{ inputs.name }}
 
       - name: Close Snapshot
-        run: corestore-snapshot --close --snapshot=./ci/snapshot.json --storage=/tmp/store
+        run: corestore-snapshot --close --snapshot=./ci/snapshot.json --storage=/tmp/store --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567
 
       - name: Create PR with snapshot
         env:
