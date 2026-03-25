@@ -21,4 +21,4 @@ jobs:
         run: npm install -g corestore-snapshot pear-stage-next
 
       - name: Touch new key
-        run: pear-stage-next --storage=/tmp/store --touch --primary=key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567
+        run: pear-stage-next --storage=/tmp/store --touch --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567
