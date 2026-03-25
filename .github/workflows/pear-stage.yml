@@ -2,6 +2,10 @@ name: Pear Stage
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        description: "Name passed to pear-stage-next"
+        required: true
 
 jobs:
   build:
@@ -25,7 +29,7 @@ jobs:
         run: corestore-snapshot --open --snapshot=./ci/snapshot.json --storage=/tmp/store
 
       - name: Stage next
-        run: pear-stage-next --storage=/tmp/store --target=./build/ --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567
+        run: pear-stage-next --storage=/tmp/store --target=./build/ --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567 --name=${{ inputs.name }}
 
       - name: Close Snapshot
         run: corestore-snapshot --close --snapshot=./ci/snapshot.json --storage=/tmp/store

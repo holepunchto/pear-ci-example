@@ -2,6 +2,10 @@ name: Pear Touch
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        description: "Name passed to pear-stage-next"
+        required: true
 
 jobs:
   build:
@@ -21,4 +25,4 @@ jobs:
         run: npm install -g corestore-snapshot pear-stage-next
 
       - name: Touch new key
-        run: pear-stage-next --storage=/tmp/store --touch --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567
+        run: pear-stage-next --storage=/tmp/store --touch --primary-key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567 --name=${{ inputs.name }}
