@@ -6,7 +6,11 @@ on:
       name:
         description: "Name passed to pear-stage-next"
         required: true
-
+        type: choice
+        options:
+          - prerelease
+          - staging
+          - nightly
 jobs:
   build:
     runs-on: ubuntu-latest
