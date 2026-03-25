@@ -1,0 +1,24 @@
+name: Pear Touch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Install tools
+        run: npm install -g corestore-snapshot pear-stage-next
+
+      - name: Touch new key
+        run: pear-stage-next --storage=/tmp/store --touch --primary=key=deadbeef01234567deadbeef01234567deadbeef01234567deadbeef01234567
