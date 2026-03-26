@@ -1,5 +1,4 @@
-name: Pear Stage
-
+name: Pear Stage (PR)
 on:
   workflow_dispatch:
     inputs:
@@ -11,7 +10,6 @@ on:
           - prerelease
           - staging
           - nightly
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +17,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-
     steps:
       - uses: actions/checkout@v4
 

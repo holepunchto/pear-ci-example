@@ -1,0 +1,39 @@
+name: Pear Stage (push to main)
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Name passed to pear-stage-next"
+        required: true
+        type: choice
+        options:
+          - prerelease
+          - staging
+          - nightly
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+      - name: Install tools
+        run: npm install -g corestore-snapshot pear-stage-next
+      - name: Open Snapshot
+        run: corestore-snapshot --open --snapshot=./ci/snapshot.json --storage=/tmp/store --primary-key=${{ secrets.PEAR_PRIMARY_KEY }}
+      - name: Stage next
+        run: pear-stage-next --storage=/tmp/store --target=./build/ --primary-key=${{ secrets.PEAR_PRIMARY_KEY }} --name=${{ inputs.name }}
+      - name: Close Snapshot
+        run: corestore-snapshot --close --snapshot=./ci/snapshot.json --storage=/tmp/store --primary-key=${{ secrets.PEAR_PRIMARY_KEY }}
+      - name: Push snapshot to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ci/snapshot.json
+          git commit -m "ci: update snapshot.json with new stage [run #${{ github.run_number }}]"
+          git push origin HEAD:main
